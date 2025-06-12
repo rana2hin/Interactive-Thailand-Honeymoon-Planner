@@ -15,6 +15,7 @@
         - Budget Overview: Goal=Inform/Compare. Method=Donut Chart (Chart.js) for budget allocation & Stat Cards (HTML/Tailwind) for key numbers. Interaction=Hover on chart. Justification=Provides an immediate, high-level understanding of financials.
         - Cumulative Spending: Goal=Change. Method=Line Chart (Chart.js). Interaction=Hover to see daily totals. Justification=Visually tracks spending pace against the budget over the 14 days.
         - Itinerary: Goal=Organize. Method=Clickable Day Cards (HTML/Tailwind/JS) revealing a detailed modal. Interaction=Click on a day. Justification=Breaks down the dense schedule into manageable, interactive chunks, far more user-friendly than a large static table.
+        - Detailed Itinerary Table: Goal=Organize/Inform. Method=HTML Table with dynamic JS population. Interaction=Scrolling, direct viewing. Justification=Provides a comprehensive, at-a-glance summary of the entire trip's plan, directly addressing the user's request for a 'straightforward plan table'.
         - Destination Details: Goal=Organize/Inform. Method=Tabs and Accordions (HTML/Tailwind/JS). Interaction=Click to switch tabs/expand content. Justification=Neatly categorizes a large amount of text, preventing information overload and allowing users to focus on specific interests (e.g., only hotels in Chiang Mai).
         - Tips: Goal=Inform. Method=Styled lists with icons (HTML/Tailwind). Justification=Improves scannability of key advice.
         - AI-Powered Activity Suggester: Goal=Engage/Inform. Method=LLM text generation triggered by a button in modal. Interaction=Button click. Justification=Adds dynamic, personalized suggestions to enhance trip planning.
@@ -93,17 +94,17 @@
                 <div class="card p-6 text-center">
                     <h3 class="text-lg font-semibold text-gray-500">Flight Costs</h3>
                     <p class="text-4xl font-bold text-[#D98B76] mt-2">85,000</p>
-                     <p class="text-gray-500">BDT</p>
+                     <p class="text-500">BDT</p>
                 </div>
                 <div class="card p-6 text-center">
                     <h3 class="text-lg font-semibold text-gray-500">On-Ground Budget</h3>
-                    <p class="text-4xl font-bold text-[#6A8A82] mt-2">135,000</p>
-                     <p class="text-gray-500">BDT</p>
+                    <p class="text-4xl font-bold text-[#6A8A82] mt-2">134,038</p>
+                     <p class="text-500">BDT</p>
                 </div>
                 <div class="card p-6 text-center">
                     <h3 class="text-lg font-semibold text-gray-500">Avg. Daily Spend</h3>
-                    <p class="text-4xl font-bold text-[#6A8A82] mt-2">~9,642</p>
-                     <p class="text-gray-500">BDT</p>
+                    <p class="text-4xl font-bold text-[#6A8A82] mt-2">~9,574</p>
+                     <p class="text-500">BDT</p>
                 </div>
             </div>
 
@@ -130,6 +131,27 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            </div>
+
+            <div class="overflow-x-auto card p-6 md:p-8 mt-8">
+                <h3 class="text-2xl font-bold text-center mb-6 text-gray-700">Detailed 14-Day Honeymoon Plan Table</h3>
+                <table class="w-full text-left table-auto">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left">Day</th>
+                            <th class="py-3 px-6 text-left">Location</th>
+                            <th class="py-3 px-6 text-left">🏨 Where to Stay</th>
+                            <th class="py-3 px-6 text-left">✨ What to Do</th>
+                            <th class="py-3 px-6 text-left">🍜 What to Eat</th>
+                            <th class="py-3 px-6 text-left">🚌 Transport</th>
+                            <th class="py-3 px-6 text-left">Est. Daily Total (BDT)</th>
+                            <th class="py-3 px-6 text-left">Cumulative Total (BDT)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itineraryTableBody" class="text-gray-600 text-sm font-light">
+                        <!-- Table rows will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -212,20 +234,20 @@
                 transport: 8900
             },
             itinerary: [
-                { day: 1, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500)", activity: "Arrival, Check-in, Explore Pratunam Market & Street Food (Free/Variable)", food: "Street Food (825/person)", transport: "Airport Transfer + Local (700)", dailyTotal: 5025 },
-                { day: 2, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500)", activity: "Grand Palace & Wat Pho (4,480)", food: "Street Food (825/person)", transport: "Local Transport (700)", dailyTotal: 9505 },
-                { day: 3, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500)", activity: "Wat Arun at Sunset & Chao Phraya Dinner Cruise (1,300 + 8,424)", food: "Street Food (825/person)", transport: "Local Transport (700)", dailyTotal: 14749 },
-                { day: 4, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Morning Flight to Chiang Mai, Check-in, Explore Old City & Night Bazaar (Free/Variable)", food: "Street Food (825/person)", transport: "Airport Transfer + Local (600)", dailyTotal: 8725 },
-                { day: 5, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Ethical Elephant Sanctuary Visit (11,520)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 16745 },
-                { day: 6, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Doi Inthanon National Park Day Trip (11,700)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 16925 },
-                { day: 7, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Hands-on Thai Cooking Class (6,552)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 11777 },
-                { day: 8, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Wat Phra That Doi Suthep (512), Old City Exploration (Free/Variable)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 5737 },
-                { day: 9, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Explore Nimmanhaemin Road, Cafes & Boutiques (Free/Variable)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 5225 },
-                { day: 10, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Relax / Optional Activity (e.g., Thai Massage - Variable)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 5225 },
-                { day: 11, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800)", activity: "Revisit Favorite Spot / Souvenir Shopping (Free/Variable)", food: "Street Food (825/person)", transport: "Local Transport (600)", dailyTotal: 5225 },
-                { day: 12, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500)", activity: "Morning Flight to Bangkok, Check-in, Explore Chinatown/Shopping (Free/Variable)", food: "Street Food (825/person)", transport: "Airport Transfer + Local (700)", dailyTotal: 8325 },
-                { day: 13, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500)", activity: "Floating & Railway Markets Day Trip (5,850)", food: "Street Food (825/person)", transport: "Local Transport (700)", dailyTotal: 10875 },
-                { day: 14, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500)", activity: "Last-minute Souvenir Shopping, Departure", food: "Street Food (825/person)", transport: "Airport Transfer (700)", dailyTotal: 5025 }
+                { day: 1, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500 BDT)", activity: "Arrival, Check-in, Explore Pratunam Market & Street Food (Free/Variable)", food: "Street Food (825 BDT)", transport: "Airport Transfer + Local (700 BDT)", dailyTotal: 5025 },
+                { day: 2, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500 BDT)", activity: "Grand Palace & Wat Pho (4,480 BDT)", food: "Street Food (825 BDT)", transport: "Local Transport (700 BDT)", dailyTotal: 9505 },
+                { day: 3, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500 BDT)", activity: "Wat Arun at Sunset & Chao Phraya Dinner Cruise (1,300 BDT + 8,424 BDT)", food: "Street Food (825 BDT)", transport: "Local Transport (700 BDT)", dailyTotal: 14749 },
+                { day: 4, location: "Travel to Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Morning Flight to Chiang Mai, Check-in, Explore Old City & Night Bazaar (Free/Variable)", food: "Street Food (825 BDT)", transport: "Airport Transfer + Local (600 BDT)", dailyTotal: 8725 },
+                { day: 5, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Ethical Elephant Sanctuary Visit (11,520 BDT)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 16745 },
+                { day: 6, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Doi Inthanon National Park Day Trip (11,700 BDT)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 16925 },
+                { day: 7, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Hands-on Thai Cooking Class (6,552 BDT)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 11777 },
+                { day: 8, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Wat Phra That Doi Suthep (512 BDT), Old City Exploration (Free/Variable)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 5737 },
+                { day: 9, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Explore Nimmanhaemin Road, Cafes & Boutiques (Free/Variable)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 5225 },
+                { day: 10, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Relax / Optional Activity (e.g., Thai Massage - Variable)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 5225 },
+                { day: 11, location: "Chiang Mai", hotel: "Goldenbell Hotel (3,800 BDT)", activity: "Revisit Favorite Spot / Souvenir Shopping (Free/Variable)", food: "Street Food (825 BDT)", transport: "Local Transport (600 BDT)", dailyTotal: 5225 },
+                { day: 12, location: "Travel to Bangkok", hotel: "Patra Boutique Hotel (3,500 BDT)", activity: "Morning Flight to Bangkok, Check-in, Explore Chinatown/Shopping (Free/Variable)", food: "Street Food (825 BDT)", transport: "Airport Transfer + Local (700 BDT)", dailyTotal: 8325 },
+                { day: 13, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500 BDT)", activity: "Floating & Railway Markets Day Trip (5,850 BDT)", food: "Street Food (825 BDT)", transport: "Local Transport (700 BDT)", dailyTotal: 10875 },
+                { day: 14, location: "Bangkok", hotel: "Patra Boutique Hotel (3,500 BDT)", activity: "Last-minute Souvenir Shopping, Departure", food: "Street Food (825 BDT)", transport: "Airport Transfer (700 BDT)", dailyTotal: 5025 }
             ],
             destinations: {
                 bangkok: {
@@ -291,7 +313,7 @@
                             <div class="accordion-content">
                                <ul class="list-disc pl-5 space-y-2 mt-2 text-gray-600">
                                     <li><b>Ethical Elephant Sanctuary:</b> A memorable and moving experience to feed and bathe rescued elephants. (Est. 11,520 BDT)</li>
-                                    <li><b>Doi Inthanon National Park:</b> A day trip to Thailand's highest peak, with waterfalls and pagodas. (Est. 11,700 BDT for a tour)</li>
+                                    <li><b>Doi Inthanon National Park:</b> A day trip to Thailand's highest peak, with waterfalls and pagodas. (Est. 11,700 BDT)</li>
                                     <li><b>Hands-on Thai Cooking Class:</b> A fun, interactive bonding experience that ends with a delicious meal. (Est. 6,552 BDT)</li>
                                     <li><b>Wat Phra That Doi Suthep:</b> Visit the city's most important temple for panoramic views. (Est. 512 BDT)</li>
                                     <li><b>Old City & Night Bazaar:</b> Explore ancient temples by day and enjoy the vibrant market atmosphere by night.</li>
@@ -417,7 +439,7 @@
                 <div class="space-y-4">
                     <div>
                         <h4 class="font-bold text-lg text-gray-700">🏨 Accommodation</h4>
-                        <p class="text-gray-600 pl-4">${dayData.hotel} BDT</p>
+                        <p class="text-gray-600 pl-4">${dayData.hotel}</p>
                     </div>
                     <div>
                         <h4 class="font-bold text-lg text-gray-700">🎉 Activities</h4>
@@ -600,7 +622,7 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = "";
+                const apiKey = "AIzaSyCIysKBVBxIu3qpCbO_lt6T_1wh5z3dTWo";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const response = await fetch(apiUrl, {
                             method: 'POST',
@@ -625,11 +647,35 @@
             }
         }
 
+        function setupItineraryTable() {
+            const tableBody = document.getElementById('itineraryTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+            let cumulativeTotal = 85000; // Starting with flight costs
+
+            honeymoonData.itinerary.forEach(dayData => {
+                cumulativeTotal += dayData.dailyTotal;
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200 hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="py-3 px-6 whitespace-nowrap">${dayData.day}</td>
+                    <td class="py-3 px-6">${dayData.location}</td>
+                    <td class="py-3 px-6">${dayData.hotel}</td>
+                    <td class="py-3 px-6">${dayData.activity}</td>
+                    <td class="py-3 px-6">${dayData.food}</td>
+                    <td class="py-3 px-6">${dayData.transport}</td>
+                    <td class="py-3 px-6 font-semibold text-[#D98B76]">${BDTFormatter.format(dayData.dailyTotal)}</td>
+                    <td class="py-3 px-6 font-semibold text-[#6A8A82]">${BDTFormatter.format(cumulativeTotal)} BDT</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
         setupCharts();
         setupItinerary();
         setupModal();
         setupDestinationExplorer();
         setupNavigation();
+        setupItineraryTable(); // Call the function to populate the new table
     });
     </script>
 </body>
