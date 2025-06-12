@@ -1,1 +1,0 @@
-# Interactive-Thailand-Honeymoon-Planner
